@@ -82,6 +82,8 @@ const extraMetadata = {};
 
 const rarityDelimiter = "#";
 
+const hairColorDelimiter = "|";
+
 const uniqueDnaTorrance = 10000;
 
 const preview = {
@@ -108,6 +110,7 @@ module.exports = {
   uniqueDnaTorrance,
   layerConfigurations,
   rarityDelimiter,
+  hairColorDelimiter,
   preview,
   shuffleLayerConfigurations,
   debugLogs,

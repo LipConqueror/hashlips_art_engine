@@ -13,6 +13,7 @@ const {
   uniqueDnaTorrance,
   layerConfigurations,
   rarityDelimiter,
+  hairColorDelimiter,
   shuffleLayerConfigurations,
   debugLogs,
   extraMetadata,
@@ -183,7 +184,7 @@ const addAttributes = (_element) => {
   let selectedElement = _element.layer.selectedElement;
   attributesList.push({
     trait_type: _element.layer.name,
-    value: selectedElement.name,
+    value: selectedElement.name.split(hairColorDelimiter).pop(),
   });
 };
 
