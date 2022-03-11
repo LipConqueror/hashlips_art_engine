@@ -106,6 +106,14 @@ const layersSetup = (layersOrder) => {
       layerObj.options?.["bypassDNA"] !== undefined
         ? layerObj.options?.["bypassDNA"]
         : false,
+    isHairColor:
+      layerObj.options?.["isHairColor"] !== undefined
+        ? layerObj.options?.["isHairColor"]
+        : false,
+    isHairChild:
+      layerObj.options?.["isHairChild"] !== undefined
+        ? layerObj.options?.["isHairChild"]
+        : false,
   }));
   return layers;
 };
@@ -281,17 +289,47 @@ const isDnaUnique = (_DnaList = new Set(), _dna = "") => {
 
 const createDna = (_layers) => {
   let randNum = [];
+  let hairColor = "";
   _layers.forEach((layer) => {
     var totalWeight = 0;
-    layer.elements.forEach((element) => {
-      totalWeight += element.weight;
-    });
+
+    if (layer.isHairChild) {
+      if (hairColor == "") {
+        console.log("can not found hair color for:", layer.name);
+        return
+      }
+
+      layer.elements.forEach((element) => {
+        if (element.name.startsWith(hairColor)) {
+          totalWeight += element.weight;
+        }
+      });
+    }else {
+      layer.elements.forEach((element) => {
+        totalWeight += element.weight;
+      });
+    }
+    
     // number between 0 - totalWeight
     let random = Math.floor(Math.random() * totalWeight);
     for (var i = 0; i < layer.elements.length; i++) {
       // subtract the current weight from the random weight until we reach a sub zero value.
-      random -= layer.elements[i].weight;
+      if (layer.isHairChild) {
+        console.log("hair child:", layer.elements[i].filename);
+        if (layer.elements[i].name.startsWith(hairColor)) {
+          random -= layer.elements[i].weight;
+        }else {
+          continue;
+        }
+      }else {
+        random -= layer.elements[i].weight;
+      }
+      
       if (random < 0) {
+        if (layer.isHairColor) {
+            hairColor = layer.elements[i].name;
+            console.log("hair color:", hairColor);
+        }
         return randNum.push(
           `${layer.elements[i].id}:${layer.elements[i].filename}${
             layer.bypassDNA ? "?bypassDNA=true" : ""

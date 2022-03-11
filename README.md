@@ -122,11 +122,21 @@ const layerConfigurations = [
   {
     growEditionSizeTo: 5,
     layersOrder: [
+      { name: "Hair Color",
+        options: {
+          isHairColor: true,
+        }, 
+      },
       { name: "Background" , {
         options: {
           bypassDNA: false;
         }
       }},
+      { name: "Back Hair",
+        options: {
+            isHairChild: true,
+        },
+      },
       { name: "Eyeball" },
       {
         name: "Eye color",
@@ -134,6 +144,11 @@ const layerConfigurations = [
           blend: MODE.destinationIn,
           opacity: 0.2,
           displayName: "Awesome Eye Color",
+        },
+      },
+      { name: "Front Hair",
+        options: {
+            isHairChild: true,
         },
       },
       { name: "Iris" },
